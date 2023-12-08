@@ -1,0 +1,37 @@
+service: serverless-mongo-atlas
+frameworkVersion: '3'
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+provider:
+  name: aws
+  runtime: nodejs18.x
+  memorysize : 128
+  region : ap-south-1
+  stage : ${opt:stage, 'dev'}
+
+functions:
+  createUser:
+    handler: src/handlers/createUser.handler
+    events:
+      - httpApi:
+          path: /users
+          method: post
+  getBalance:
+    handler: src/handlers/balance.handler
+    events:
+      - httpApi:
+          path: /balance
+          method: post
+  createTrans:
+    handler: src/handlers/create_transfer.handler
+    events:
+      - httpApi:
+          path: /createTrans
+          method: post
+  historyTrans:
+    handler: src/handlers/history_transfer.handler
+    events:
+      - httpApi:
+          path: /historyTransfer
+          method: post
